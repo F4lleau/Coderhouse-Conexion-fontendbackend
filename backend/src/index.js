@@ -9,6 +9,7 @@ import { Server } from 'socket.io'
 
 import path from 'path'
 import { __dirname } from './path.js'
+import { addLogger } from "./utils/logger.js"; 
 
 import router from './routes/index.routes.js'
 
@@ -22,7 +23,7 @@ import session from 'express-session'
 import { userModel } from './models/users.models.js'
 
 
-const whiteList =  ['http://localhost:5173']
+const whiteList =  ['http://localhost:5173/']
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -166,6 +167,33 @@ io.on('connection', (socket) => {
 //Routes
 
 app.use('/', router)
+
+//Routes Logger
+app.use(addLogger)
+app.get('/info', (req, res) => {
+    req.logger.info("Info")
+    res.send("Info!")
+})
+
+app.get('/debug', (req, res) => {
+    req.logger.info("Debug")
+    res.send("debug!")
+})
+
+app.get('/warning', (req, res) => {
+    req.logger.info("Warning")
+    res.send("Warning!")
+})
+
+app.get('/error', (req, res) => {
+    req.logger.info("Error")
+    res.send("Error!")
+})
+
+app.get('/fatal', (req, res) => {
+    req.logger.info("Fatal")
+    res.send("Fatal!")
+})
 
 
 
