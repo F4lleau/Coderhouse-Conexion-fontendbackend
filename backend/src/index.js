@@ -20,7 +20,7 @@ import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import initializePassport from './config/passport.js'
 import session from 'express-session'
-import { userModel } from './models/users.models.js'
+import { userModel } from './models/user.models.js'
 
 
 const whiteList =  ['http://localhost:5173/']

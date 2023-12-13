@@ -3,7 +3,7 @@ import GithubStrategy from 'passport-github2'
 import jwt from 'passport-jwt'
 import passport from 'passport'
 import { createHash, validatePassword } from '../utils/bcrypt.js'
-import { userModel } from '../models/users.models.js'
+import { userModel } from '../models/user.models.js'
 import 'dotenv/config.js'
 
 
