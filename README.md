@@ -1,9 +1,5 @@
 # Conexion-fontendbackend
- Desafio coderhouse
-
-
- Tercera pre-entrega.
-
+3ra preentrega
 - El chat no va (Ya no se actualizara en el curso y opcionalmente se puede eliminar del proyecto).
 
 - Delimitar acceso a endpoints:
