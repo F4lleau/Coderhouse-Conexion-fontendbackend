@@ -21,6 +21,7 @@ import passport from 'passport'
 import initializePassport from './config/passport.js'
 import session from 'express-session'
 import { userModel } from './models/user.models.js'
+import userRouter from './routes/user.routes.js'
 
 
 const whiteList =  ['http://localhost:5173/']
@@ -68,6 +69,8 @@ app.use(session({
     saveUninitialized: false
 
 }))
+app.use('/api/users', userRouter)
+
 //uso de passport en la app 
 initializePassport()
 app.use(passport.initialize())
@@ -171,28 +174,27 @@ app.use('/', router)
 //Routes Logger
 app.use(addLogger)
 app.get('/info', (req, res) => {
-    req.logger.info("Info")
-    res.send("Info!")
-})
-
-app.get('/debug', (req, res) => {
-    req.logger.info("Debug")
-    res.send("debug!")
+    req.logger.info('<span style="color:blue">Texto informativo de Info</span><br/>')
+    res.send("Hola!")
 })
 
 app.get('/warning', (req, res) => {
-    req.logger.info("Warning")
-    res.send("Warning!")
+    req.logger.warning('<span style="color:cyan">Texto Warning</span><br/>')
+    res.send("Hola!")
 })
 
 app.get('/error', (req, res) => {
-    req.logger.info("Error")
-    res.send("Error!")
+    req.logger.error('<span style="color:yellow">Texto Error</span><br/>')
+    res.send("Hola!")
 })
 
 app.get('/fatal', (req, res) => {
-    req.logger.info("Fatal")
-    res.send("Fatal!")
+    req.logger.fatal('<span style="color:red">Texto informativo de Info</span><br/>')
+    res.send("Hola!")
+})
+
+app.get('/testArtillery', (req, res) => {
+    res.send(" Artillery")
 })
 
 

@@ -10,62 +10,58 @@ const customLevelOpt = {
     },
     colors: {
         fatal: 'red',
-        error: 'orange',
-        warining: 'yellow',
+        error: 'yellow',
+        warning: 'cyan',
         info: 'blue',
-        debug: 'green'
+        debug: 'grey'
     }
 }
+
 
 const logger = winston.createLogger({
     levels: customLevelOpt.levels,
     transports: [
+        new winston.transports.File({
+            filename: './errors.html',
+            level: 'fatal',
+            format: winston.format.combine(
+                winston.format.simple()
+            )
+        }),
+        new winston.transports.File({
+            filename: './errors.html',
+            level: 'error',
+            format: winston.format.combine(
+                winston.format.simple()
+            )
+        }),
+        new winston.transports.File({
+            filename: './loggers.html',
+            level: 'warning',
+            format: winston.format.combine(
+                winston.format.simple()
+            )
+        }),
+        new winston.transports.File({
+            filename: './loggers.html',
+            level: 'info',
+            format: winston.format.combine(
+                winston.format.simple()
+            )
+        }),
         new winston.transports.Console({
             level: 'debug',
             format: winston.format.combine(
                 winston.format.colorize({ colors: customLevelOpt.colors }),
                 winston.format.simple()
             )
-        }),
-        new winston.transports.File({
-            filename: './errors.log',
-            level: 'fatal',
-            format: winston.format.combine(
-                winston.format.colorize({ colors: customLevelOpt.colors }),
-                winston.format.simple()
-            )
-        }),
-        new winston.transports.File({
-            filename: './errors.log',
-            level: 'error',
-            format: winston.format.combine(
-                winston.format.colorize({ colors: customLevelOpt.colors }),
-                winston.format.simple()
-            )
-        }),
-        new winston.transports.File({
-            filename: './loggers.log',
-            level: 'warning',
-            format: winston.format.combine(
-                winston.format.colorize({ colors: customLevelOpt.colors }),
-                winston.format.simple()
-            )
-        }),
-        new winston.transports.File({
-            filename: './loggers.log',
-            level: 'info',
-            format: winston.format.combine(
-                winston.format.colorize({ colors: customLevelOpt.colors }),
-                winston.format.simple()
-            )
-        }),
+        })
     ]
 })
 
-export const addLogger = ( req, res, next ) => {
+
+export const addLogger = (req, res, next) => {
     req.logger = logger
-    req.logger.fatal(
-        `${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`
-    )
+    req.logger.debug(`${req.method} es ${req.url} - ${new Date().toLocaleTimeString()}`)
     next()
 }

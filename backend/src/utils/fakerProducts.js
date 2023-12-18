@@ -27,7 +27,7 @@ export const randomFakeProducts=async(cant) =>{
     return products;
 }
 
-console.log(modelProduct(10))
+/*console.log(modelProduct(10))*/
 
 const commonError ={
     'missing_field' :'Falta completar campo obligatorio',
