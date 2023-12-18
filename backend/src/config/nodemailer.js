@@ -1,15 +1,11 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 import fs from 'fs';
-
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Configurar o nodemailer
-const transporter = nodemailer.createTransport({
+const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
@@ -64,11 +60,11 @@ export const sendVerificationEmail = async (email, verificationCode) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Verificación de Email',
+            subject: 'Link para reestablecer su contraseña',
             text: `Tu código de verificación es: ${verificationCode}`
         };
 
-        await transporter.sendMail(mailOptions);
+        await transport.sendMail(mailOptions);
     } catch (error) {
         console.error('Error al enviar el correo de verificación:', error);
         throw error;
