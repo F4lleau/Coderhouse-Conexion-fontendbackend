@@ -17,7 +17,7 @@ userRouter.post('/password-recovery', (req, res) => {
     try {
         const token = crypto.randomBytes(20).toString('hex') // Token unico con el fin de que no haya dos usuarios con el mismo link de recuperacion
         recoveryLinks[token] = { email: email, timestamp: Date.now() }
-        const recoveryLink = `http://localhost:4000/api/users/reset-password/${token}`
+        const recoveryLink = `http://localhost:8080/api/users/reset-password/${token}`
         sendRecoveryMail(email, recoveryLink)
         res.status(200).send('Correo de recuperacion enviado')
     } catch (error) {
@@ -44,7 +44,7 @@ userRouter.post('/reset-password/:token', (req, res) => {
                 res.status(400).send('Las contraseñas deben ser identicas')
             }
         } else {
-            res.status(400).send('Token invalido o expirado. Pruebe nuevamente')
+            res.status(400).send('Token expirado. Pruebe nuevamente')
         }
     } catch (error) {
         res.status(500).send(`Error al modificar contraseña ${error}`)
