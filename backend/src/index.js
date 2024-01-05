@@ -14,7 +14,7 @@ import { addLogger } from "./utils/logger.js";
 import router from './routes/index.routes.js'
 
 import { productModel } from './models/products.models.js'
-import { msgsModel } from './models/messages.models.js'
+import { messageModel } from './models/messages.models.js'
 
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
@@ -155,13 +155,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('newMessage', async ({ email, message }) => {
-        await msgsModel.create({ email: email, message: message })
-        const messages = await msgsModel.find()
+        await messageModel.create({ email: email, message: message })
+        const messages = await messageModel.find()
         socket.emit("showMessages", messages)
     })
 
     socket.on('loadChats', async () => {
-        const messages = await msgsModel.find()
+        const messages = await messageModel.find()
         socket.emit("showMessages", messages)
     })
 

@@ -1,4 +1,4 @@
-import { Router } from "express";
+/*import { Router } from "express";
 import { msgsModel } from "../models/messages.models.js";
 
 const messageRouter = Router();
@@ -23,4 +23,17 @@ messageRouter.post("/", async(req, res) => {
     }
 });
 
-export default messageRouter
+export default messageRouter*/
+
+import { Router } from "express"
+import { messageController } from "../controllers/message.controller.js";
+import { passportError, authorization } from "../utils/messagesError.js";
+const messageRouter = Router();
+
+messageRouter.get('/', passportError('jwt'), authorization(['user','premium']), messageController.getMessages);
+
+messageRouter.post('/', passportError('jwt'), authorization(['user','premium']), messageController.createMessage);
+
+
+export default messageRouter;
+

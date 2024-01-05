@@ -1,20 +1,15 @@
-import { Router } from "express";
-import { postProduct, getProductById, getProducts, putProductById, deleteProductById  } from "../controllers/products.controllers.js";
-import { passportError, authorization } from "../utils/messagesError.js";
+import { Router } from "express"
+import { cartController } from "../controllers/cart.controllers.js";
 
-const productRouter = Router()
+const cartRouter = Router()
 
-productRouter.post('/', postProduct)
-
-productRouter.get('/', getProducts)
-
-productRouter.get('/:id', getProductById)
-
-productRouter.put('/:id', passportError('jwt'), authorization('admin'), putProductById)
-
-productRouter.delete('/:id', passportError('jwt'), authorization('admin'), deleteProductById)
+cartRouter.get('/', cartController.getCarts);
+cartRouter.post('/', cartController.createCart);
+cartRouter.delete('/:id', cartController.cleanCart);
+cartRouter.put('/:cid', cartController.updateCartWithProducts);
+cartRouter.get('/:id', cartController.getCart);
+cartRouter.put('/:cid/products/:pid', cartController.addOrUpdateProductInCart);
+cartRouter.delete('/:cid/products/:pid', cartController.removeProductbyId);
 
 
-
-
-export default productRouter
+export default cartRouter; 

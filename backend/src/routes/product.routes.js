@@ -1,14 +1,15 @@
-import { Router } from "express";
-import { getProducts, getProductById, postProduct, putProductById, deleteProductById } from "../controllers/products.controllers.js";
+import { Router } from "express"
 import { passportError, authorization } from "../utils/messagesError.js";
+import { productController } from "../controllers/products.controllers.js";
+const productRouter = Router();
 
-const productRouter = Router()
-
-productRouter.get('/', getProducts)
-productRouter.get('/:id', getProductById)
-productRouter.post('/', passportError('jwt'), authorization('Admin'), postProduct)
-productRouter.put('/:id', passportError('jwt'), authorization('Admin'), putProductById)
-productRouter.delete('/:id', passportError('jwt'), authorization('Admin'), deleteProductById)
+productRouter.get('/', passportError('jwt'), authorization(['user','admin','premium']), productController.getProducts);
+productRouter.post('/', passportError('jwt'), authorization(['admin']), productController.createProduct);
+productRouter.get('/:id', passportError('jwt'), authorization(['user','admin','premium']), productController.getProduct);
+productRouter.delete('/:id', passportError('jwt'), authorization(['user','admin','premium']), productController.deleteProduct)
+productRouter.put('/:code', passportError('jwt'), authorization(['user','admin','premium']), productController.updateProduct);
+productRouter.post('/mockingproducts', passportError('jwt'), authorization(['admin']), productController.createMockProduct);
+productRouter.post('/mockingproducts/:number', passportError('jwt'), authorization(['admin']), productController.createMockProducts);
 
 export default productRouter
 //apolicando controladores 
